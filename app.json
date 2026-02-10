@@ -1,11 +1,12 @@
 {
   "expo": {
-    "name": "Kambio",
-    "slug": "v-rate",
+    "name": "TasaVerde",
+    "slug": "tasa-verde",
+    "scheme": "tasaverde",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
@@ -14,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.giudpc.kambio"
+      "bundleIdentifier": "com.giudpc.tasaverde"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +24,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.giudpc.kambio"
+      "package": "com.giudpc.tasaverde"
     },
     "web": {
       "favicon": "./assets/favicon.png"

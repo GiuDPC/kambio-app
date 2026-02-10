@@ -1,23 +1,47 @@
 import React, { useMemo, useCallback } from 'react';
-import { StyleSheet, View, Text, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, RefreshControl, TouchableOpacity, Alert } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { useRates } from '../hooks/useRates';
 import { FadeInView, PulsingBadge } from '../components/AnimatedComponents';
 import { Icon, AppLogo } from '../components/Icon';
 import { DashboardSkeleton } from '../components/SkeletonLoader';
+import { signOut } from '../services/supabase';
+
+function handleLogout() {
+  Alert.alert(
+    'Cerrar Sesion',
+    'Seguro que quieres salir?',
+    [
+      { text: 'Cancelar', style: 'cancel' },
+      {
+        text: 'Salir',
+        style: 'destructive',
+        onPress: async () => {
+          await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+          await signOut();
+        },
+      },
+    ]
+  );
+}
 
 const RateHeader = ({ lastUpdated }: { lastUpdated: string }) => (
   <View style={styles.header}>
     <View style={styles.logoContainer}>
       <AppLogo size={50} />
       <View>
-        <Text style={styles.logo}>Kambio</Text>
+        <Text style={styles.logo}>TasaVerde</Text>
         <Text style={styles.logoSubtitle}>Tasas en Tiempo Real</Text>
       </View>
     </View>
-    <View style={styles.updateInfo}>
-      <Text style={styles.updateLabel}>ACTUALIZADO</Text>
-      <Text style={styles.updateTime}>{lastUpdated}</Text>
+    <View style={styles.headerRight}>
+      <View style={styles.updateInfo}>
+        <Text style={styles.updateLabel}>ACTUALIZADO</Text>
+        <Text style={styles.updateTime}>{lastUpdated}</Text>
+      </View>
+      <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <Text style={styles.logoutIcon}>⏻</Text>
+      </TouchableOpacity>
     </View>
   </View>
 );
@@ -178,9 +202,12 @@ const styles = StyleSheet.create({
   logoIcon: { width: 50, height: 50, borderRadius: 14, backgroundColor: '#10B981', justifyContent: 'center', alignItems: 'center', marginRight: 12 },
   logo: { fontSize: 26, fontWeight: 'bold', color: '#F8FAFC' },
   logoSubtitle: { fontSize: 12, color: '#94A3B8' },
+  headerRight: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   updateInfo: { alignItems: 'flex-end' },
   updateLabel: { fontSize: 10, color: '#64748B', letterSpacing: 0.5 },
   updateTime: { fontSize: 16, fontWeight: 'bold', color: '#F8FAFC' },
+  logoutButton: { width: 36, height: 36, borderRadius: 10, backgroundColor: 'rgba(239, 68, 68, 0.15)', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: 'rgba(239, 68, 68, 0.3)' },
+  logoutIcon: { fontSize: 16, color: '#EF4444' },
   bestOptionBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(16, 185, 129, 0.15)', borderWidth: 1, borderColor: '#10B981', borderRadius: 16, padding: 16, marginBottom: 20 },
   lightIconContainer: { marginRight: 12 },
   bestOptionText: { flex: 1 },

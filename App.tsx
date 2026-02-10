@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { StatusBar, View, StyleSheet } from 'react-native';
+import { StatusBar, View, StyleSheet, ActivityIndicator } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-// Importar desde src/
 import { DashboardScreen } from './src/screens/DashboardScreen';
 import { CalculatorScreen } from './src/screens/CalculatorScreen';
 import { HistoryScreen } from './src/screens/HistoryScreen';
 import { AlertsScreen } from './src/screens/AlertsScreen';
 import { SplashScreen } from './src/components/SplashScreen';
 import { Icon, IconName } from './src/components/Icon';
+import { useAuth } from './src/hooks/useAuth';
+import AuthScreen from './src/screens/AuthScreen';
 
 const Tab = createBottomTabNavigator();
 
-// Cliente de React Query optimizado
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -27,7 +27,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// Componente de icono para tabs
 function TabIcon({ name, focused }: { name: IconName; focused: boolean }) {
   return (
     <View style={styles.iconContainer}>
@@ -62,8 +61,6 @@ function TabNavigator() {
         },
         lazy: true,
         tabBarHideOnKeyboard: true,
-        // Animación suave al cambiar de tab
-        animation: 'fade',
       }}
     >
       <Tab.Screen
@@ -72,7 +69,6 @@ function TabNavigator() {
         options={{
           tabBarIcon: ({ focused }) => <TabIcon name="graphic" focused={focused} />,
           tabBarLabel: 'Tasas',
-          tabBarAccessibilityLabel: 'Ver tasas de cambio actuales',
         }}
       />
       <Tab.Screen
@@ -81,7 +77,6 @@ function TabNavigator() {
         options={{
           tabBarIcon: ({ focused }) => <TabIcon name="calculator" focused={focused} />,
           tabBarLabel: 'Calculadora',
-          tabBarAccessibilityLabel: 'Abrir calculadora de conversión',
         }}
       />
       <Tab.Screen
@@ -90,7 +85,6 @@ function TabNavigator() {
         options={{
           tabBarIcon: ({ focused }) => <TabIcon name="historialMenu" focused={focused} />,
           tabBarLabel: 'Historial',
-          tabBarAccessibilityLabel: 'Ver historial de tasas',
         }}
       />
       <Tab.Screen
@@ -99,7 +93,6 @@ function TabNavigator() {
         options={{
           tabBarIcon: ({ focused }) => <TabIcon name="notificacionesMenu" focused={focused} />,
           tabBarLabel: 'Alertas',
-          tabBarAccessibilityLabel: 'Configurar alertas de tasas',
         }}
       />
     </Tab.Navigator>
@@ -108,12 +101,30 @@ function TabNavigator() {
 
 export default function App() {
   const [showSplash, setShowSplash] = useState(true);
+  const { loading, isLoggedIn } = useAuth();
 
   if (showSplash) {
     return (
       <>
         <StatusBar barStyle="light-content" backgroundColor="#0F172A" />
         <SplashScreen onFinish={() => setShowSplash(false)} />
+      </>
+    );
+  }
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#10B981" />
+      </View>
+    );
+  }
+
+  if (!isLoggedIn) {
+    return (
+      <>
+        <StatusBar barStyle="light-content" backgroundColor="#0F172A" />
+        <AuthScreen />
       </>
     );
   }
@@ -134,5 +145,11 @@ const styles = StyleSheet.create({
   iconContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: '#0F172A',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

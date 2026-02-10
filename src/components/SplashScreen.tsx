@@ -96,7 +96,7 @@ export function SplashScreen({ onFinish }: SplashScreenProps) {
           },
         ]}
       >
-        <Text style={styles.appName}>Kambio</Text>
+        <Text style={styles.appName}>TasaVerde</Text>
         <Text style={styles.tagline}>Tasas en tiempo real</Text>
       </Animated.View>
     </Animated.View>

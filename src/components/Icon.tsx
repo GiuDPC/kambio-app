@@ -35,6 +35,9 @@ const icons = {
   baja: SiBajaIcon,
 } as const;
 
+// Iconos multicolor que tienen sus propios colores internos
+const multiColorIcons = new Set(['dollar', 'light', 'alert']);
+
 export type IconName = keyof typeof icons;
 
 interface IconProps {
@@ -48,9 +51,15 @@ export function Icon({ name, size = 24, color = '#F8FAFC', style }: IconProps) {
   const SvgIcon = icons[name];
   if (!SvgIcon) return null;
 
+  const isMultiColor = multiColorIcons.has(name);
+
   return (
     <View style={[styles.container, style]}>
-      <SvgIcon width={size} height={size} fill={color} />
+      {isMultiColor ? (
+        <SvgIcon width={size} height={size} />
+      ) : (
+        <SvgIcon width={size} height={size} fill={color} stroke={color} />
+      )}
     </View>
   );
 }
