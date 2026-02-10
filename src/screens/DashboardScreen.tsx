@@ -40,7 +40,7 @@ const RateHeader = ({ lastUpdated }: { lastUpdated: string }) => (
         <Text style={styles.updateTime}>{lastUpdated}</Text>
       </View>
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutIcon}>⏻</Text>
+        <Icon name="logout" size={22} color="#EF4444" />
       </TouchableOpacity>
     </View>
   </View>
@@ -207,7 +207,6 @@ const styles = StyleSheet.create({
   updateLabel: { fontSize: 10, color: '#64748B', letterSpacing: 0.5 },
   updateTime: { fontSize: 16, fontWeight: 'bold', color: '#F8FAFC' },
   logoutButton: { width: 36, height: 36, borderRadius: 10, backgroundColor: 'rgba(239, 68, 68, 0.15)', justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: 'rgba(239, 68, 68, 0.3)' },
-  logoutIcon: { fontSize: 16, color: '#EF4444' },
   bestOptionBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'rgba(16, 185, 129, 0.15)', borderWidth: 1, borderColor: '#10B981', borderRadius: 16, padding: 16, marginBottom: 20 },
   lightIconContainer: { marginRight: 12 },
   bestOptionText: { flex: 1 },

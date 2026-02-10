@@ -16,6 +16,7 @@ import AlertIcon from '../../assets/icons/alert.svg';
 import CopiarIcon from '../../assets/icons/copiar-pegar.svg';
 import SiSubeIcon from '../../assets/icons/Sisube.svg';
 import SiBajaIcon from '../../assets/icons/Sibaja.svg';
+import LogoutIcon from '../../assets/icons/logout.svg';
 
 const icons = {
   bcv: BcvIcon,
@@ -33,6 +34,7 @@ const icons = {
   copiar: CopiarIcon,
   sube: SiSubeIcon,
   baja: SiBajaIcon,
+  logout: LogoutIcon,
 } as const;
 
 // Iconos multicolor que tienen sus propios colores internos
